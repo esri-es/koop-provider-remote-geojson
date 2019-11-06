@@ -19,13 +19,29 @@ function Model (koop) {}
 // req.params.id  (if index.js:disableIdParam false)
 // req.params.layer
 // req.params.method
-Model.prototype.getData = function (req, callback) {
-  const geojson = {
-    type: 'FeatureCollection',
-    features: []
-  }
 
-  callback(null, geojson)
+// Before getData function
+
+const request = require('request').defaults({gzip: true, json: true});
+const atob = require('atob');
+
+String.prototype.replaceAll = function(search, replacement) {
+    let target = this;
+    return target.replace(new RegExp(search, 'g'), replacement);
+};
+
+Model.prototype.getData = function (req, callback) {
+    // Descompress base64 string
+    let url = req.params.host.replaceAll('_', '/'); // After the URL compression '/' were manually replaced by '_'
+    url = atob(url);
+
+    request(`${url}`, (err, res, body) => {
+        if (err) return callback(err)
+
+        const geojson = body
+
+        callback(null, geojson)
+    });
 }
 
 module.exports = Model

@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <title>URL-Encoder for koop-provider-remote-geojson</title>
+    <link rel="stylesheet" href="https://s3-us-west-1.amazonaws.com/patterns.esri.com/files/calcite-web/1.2.5/css/calcite-web.min.css">
+    <script src="https://s3-us-west-1.amazonaws.com/patterns.esri.com/files/calcite-web/1.2.5/js/calcite-web.min.js"></script>
+    <style>
+        textarea{
+            height: 200px
+        }
+    </style>
+    <script
+    src="https://code.jquery.com/jquery-3.4.1.min.js"
+	    integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo="
+	    crossorigin="anonymous"></script>
+
+    <!--[if lt IE 9]>
+    <script src="http://html5shim.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+</head>
+<body>
+    <header class="top-nav fade-in">
+    <div class="grid-container leader-1">
+      <div class="column-24">
+          <h1>URL-Encoder for koop-provider-remote-geojson</h1>
+      </div>
+      </div>
+    <div class="grid-container">
+	<div class="column-24">
+    <form action="#">
+        <div>
+            <label for="source">GeoJSON URL:
+                <input type="text" id="source" name="source" value="https://raw.githubusercontent.com/esri-es/koop-provider-geojson/master/data/City_Shops_Villa_nueva_de_la_serena.geojson">
+            </label>
+        </div>
+        <div class="leader-2">
+            <label for="target">Koop provider encoded URL (check the <a href="https://github.com/esri-es/koop-provider-geojson#snippet-js-to-encode-the-url">encoding script</a>):
+            <textarea id="target" name="target"></textarea>
+            </label>
+        </div>
+        <p id="preview" class="hide">
+            Preview :
+            <a href="#" id="webmapViewer">inside webmap viewer</a> |
+            <a href="#" id="localhost">raw data</a>
+        </p>
+        <input type="submit" name="Submit" value="Encode URL" class="btn btn-primary btn-fill">
+    </form>
+</div>
+</div>
+    <script>
+        String.prototype.replaceAll = function(search, replacement) {
+            var target = this;
+            return target.replace(new RegExp(search, 'g'), replacement);
+        };
+
+        const webmapViewer = 'http://www.arcgis.com/home/webmap/viewer.html?source=sd&panel=gallery&suggestField=true&url='
+
+        function getEncodedUrl(targetUrl){
+            let url = btoa(targetUrl);
+            let path = `${url.replaceAll('/','_')}/FeatureServer/0`
+            let localhost = `http://localhost:8080/koop-provider-remote-geojson/${path}`;
+            $('#localhost').attr('href', localhost);
+            $('#webmapViewer').attr('href', `${webmapViewer}${localhost}`);
+            $("#preview").removeClass("hide")
+            return localhost;
+        }
+
+        $(function() {
+
+            $("form").submit(e => {
+                e.preventDefault();
+                $('#target').val(getEncodedUrl($('#source').val()));
+                return false;
+            });
+        });
+    </script>
+
+</body>
+</html>

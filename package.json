@@ -1,24 +1,42 @@
 {
-  "name": "koop-provider-remote-geojson",
-  "version": "0.1.0",
-  "description": "An opinionated provider template for koop-cli",
-  "main": "src/index.js",
-  "scripts": {
-    "test": "mocha 'test/**/*.test.js'",
-    "start": "koop serve"
-  },
-  "dependencies": {
-    "config": "^3.1.0"
-  },
-  "devDependencies": {
-    "@koopjs/cli": "^0.4.0",
-    "chai": "^4.2.0",
-    "mocha": "^6.1.4"
-  },
-  "repository": "",
-  "keywords": [
-    "koop",
-    "plugin",
-    "provider"
-  ]
+	"name": "koop-provider-remote-geojson",
+	"version": "0.1.0",
+
+	"main": "src/index.js",
+	"scripts": {
+		"test": "mocha 'test/**/*.test.js'",
+		"start": "koop serve"
+	},
+
+	"devDependencies": {
+		"@koopjs/cli": "^0.4.0",
+		"chai": "^4.2.0",
+		"mocha": "^6.1.4"
+	},
+
+
+	"description": "Provider to recover any static GeoJSON from any server a serve it as a feature service",
+	"dependencies": {
+		"config": "^3.1.0",
+		"atob": "^2.1.2",
+		"request": "^2.79.0"
+	},
+	"repository": {
+		"type": "git",
+		"url": "git@github.com:esri-es/koop-provider-remote-geojson.git"
+	},
+	"keywords": [
+		"koop",
+		"plugin",
+		"provider",
+		"carto",
+		"etl"
+	],
+
+	"author": "Raul Jimenez <raul.jimenez@esri.es>",
+	"homepage": "https://github.com/esri-es/koop-provider-remote-geojson",
+	"bugs": {
+		"url": "https://github.com/esri-es/koop-provider-remote-geojson/issues"
+	},
+	"license": "Apache-2.0"
 }
